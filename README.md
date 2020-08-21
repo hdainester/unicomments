@@ -4,9 +4,9 @@ A vscode extension that aims to improve the readability of source code by unifyi
 
 ## Features
 
-\!\[Unify comments in document\]\(img/unicomments-1.gif\)
-\!\[Unify comments in document\]\(img/unicomments-2.gif\)
-\!\[Unify comments in selection\]\(img/unicomments-3.gif\)
+![Unify comments in document](img/unicomments-1.gif)
+![Unify comments in document](img/unicomments-2.gif)
+![Unify comments in selection](img/unicomments-3.gif)
 
 ## Extension Settings
 

@@ -23,7 +23,7 @@ These are the hotkeys that can be set for this extension:
 
 ## Installation
 
-As of now the extension is not available on the marketplace. A pre packaged version can be downloaded [here](google.com) (install with `code --install-extension unicomments-x.x.x-alpha.x.vsix`).
+As of now the extension is not available on the marketplace. A pre packaged version can be downloaded [here](https://github.com/hdainester/unicomments/releases/) (install with `code --install-extension unicomments-x.x.x-alpha.x.vsix`).
 
 ## Known Issues
 

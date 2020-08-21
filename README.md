@@ -1,65 +1,41 @@
-# unicomments README
+# UniComments README
 
-This is the README for your extension "unicomments". After writing up a brief description, we recommend including the following sections.
+A vscode extension that aims to improve the readability of source code by unifying the max line length of comments.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+\!\[Unify comments in document\]\(img/unicomments-1.gif\)
+\!\[Unify comments in document\]\(img/unicomments-2.gif\)
+\!\[Unify comments in selection\]\(img/unicomments-3.gif\)
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `unicomments.commentLineLength`: Maximum allowed length for a line within a comment (if possible).
+* `unicomments.commentLineStarters`: Lines are recognized as comments when they start with any of the defined strings in this array (leading whitespaces are ignored).
+
+## Extension Hotkeys
+
+These are the hotkeys that can be set for this extension:
+
+* `unicomments.unify-selection`: The default hotkey is `ctrl+k g` (`cmd+k g` on mac)
+* `unicomments.unify-document`: The default hotkey is `ctrl+k ctrl+g` (`cmd+k cmd+g` on mac)
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+None yet.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 1.0.0-alpha.0
 
-### 1.0.0
+Initial release with basic functionality. Works as expected but requires some testing. Use at own risk.
 
-Initial release of ...
+## Planned Features
 
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
+* Setting to define an array of strings that will cause a comment line to be ignored by this extension if the line starts with any of the strings within the defined array (leading whitespaces and the comment starter literal are ignored).
 
 -----------------------------------------------------------------------------------------------------------
 
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+&copy; HDainester

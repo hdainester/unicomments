@@ -21,6 +21,10 @@ These are the hotkeys that can be set for this extension:
 * `unicomments.unify-selection`: The default hotkey is `ctrl+k g` (`cmd+k g` on mac)
 * `unicomments.unify-document`: The default hotkey is `ctrl+k ctrl+g` (`cmd+k cmd+g` on mac)
 
+## Installation
+
+As of now the extension is not available on the marketplace. A pre packaged version can be downloaded [here](google.com) (install with `code --install-extension unicomments-x.x.x-alpha.x.vsix`).
+
 ## Known Issues
 
 None yet.

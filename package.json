@@ -1,25 +1,69 @@
 {
+	"author": {
+		"name": "HDainester",
+		"email": "hdainester@gmx.de"
+	},
+	"repository": {
+		"url": "https://github.com/hdainester/unicomments.git",
+		"type": "git"
+	},
+	"publisher": "ChaotX",
 	"name": "unicomments",
+	"icon": "img/icon.png",
 	"displayName": "UniComments",
-	"description": "A small extension that aims to improve the readability of source code by unifiening the max line length of comments.g ",
-	"version": "0.0.1",
+	"description": "A small extension that aims to improve the readability of source code by unifying the max line length of comments (leading whitespaces are ignored).",
+	"version": "1.0.0-alpha.0",
 	"engines": {
 		"vscode": "^1.48.0"
 	},
 	"categories": [
-		"Other"
+		"Formatters"
 	],
 	"activationEvents": [
-		"onCommand:unicomments.helloWorld"
+		"onCommand:unicomments.unify-selection",
+		"onCommand:unicomments.unify-document"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "unicomments.helloWorld",
-				"title": "Hello World"
+				"command": "unicomments.unify-selection",
+				"title": "Unify Comments in Selection"
+			},
+			{
+				"command": "unicomments.unify-document",
+				"title": "Unify Comments in Document"
 			}
-		]
+		],
+		"keybindings": [
+			{
+				"command": "unicomments.unify-selection",
+				"key": "ctrl+k g",
+				"mac": "cmd+k g",
+				"when": "editorHasSelection"
+			},
+			{
+				"command": "unicomments.unify-document",
+				"key": "ctrl+k ctrl+g",
+				"mac": "cmd+k cmd+g",
+				"when": "editorFocus"
+			}
+		],
+		"configuration": {
+			"title": "UniComments",
+			"properties": {
+				"unicomments.commentLineLength": {
+					"type": "integer",
+					"default": 80,
+					"description": "Maximum allowed length for a line within a comment (if possible)."
+				},
+				"unicomments.commentLineStarters": {
+					"type": "array",
+					"default": ["///", "//", "/**", "/*", "* "],
+					"description": "Lines are recognized as comments when they start with any of the defined strings in this array (leading whitespaces are ignored)."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

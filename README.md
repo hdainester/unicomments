@@ -41,4 +41,6 @@ Initial release with basic functionality. Works as expected but requires some te
 
 -----------------------------------------------------------------------------------------------------------
 
-&copy; HDainester
+## License
+
+This extension is licensed under [MIT License](https://www.mit.edu/~amini/LICENSE.md).

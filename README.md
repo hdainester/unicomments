@@ -39,8 +39,6 @@ Initial release with basic functionality. Works as expected but requires some te
 
 * Setting to define an array of strings that will cause a comment line to be ignored by this extension if the line starts with any of the strings within the defined array (leading whitespaces and the comment starter literal are ignored).
 
------------------------------------------------------------------------------------------------------------
-
 ## License
 
 This extension is licensed under [MIT License](https://www.mit.edu/~amini/LICENSE.md).

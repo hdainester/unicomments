@@ -1,27 +1,121 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
+	let disposable1 = vscode.commands.registerCommand("unicomments.unify-selection", () => {
+		var editor = vscode.window.activeTextEditor;
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "unicomments" is now active!');
-
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('unicomments.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
-		vscode.window.showInformationMessage('Hello World from UniComments!');
+		editor?.edit(builder => editor?.selections.forEach(
+			selection => builder.replace(selection, unifyComments(
+				editor?.document.getText(selection)))));
 	});
 
-	context.subscriptions.push(disposable);
+	let disposable2 = vscode.commands.registerCommand("unicomments.unify-document", () => {
+		var editor = vscode.window.activeTextEditor;
+		var range = editor?.document.validateRange(
+			new vscode.Range(
+				new vscode.Position(0, 0),
+				new vscode.Position(Number.MAX_VALUE, Number.MAX_VALUE))) ||
+			new vscode.Range(
+				new vscode.Position(0, 0),
+				new vscode.Position(0, 0));
+
+		editor?.edit(builder => builder.replace(
+			range, unifyComments(editor?.document.getText())));
+	});
+
+	context.subscriptions.push(disposable1);
+	context.subscriptions.push(disposable2);
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {}
+
+function lineIsComment(line : string) {
+	var commentLineStarters = vscode.workspace
+		.getConfiguration("unicomments")
+		.get<string[]>("commentLineStarters") || [];
+
+	for(let cls of commentLineStarters) {
+		if(line.trimLeft().startsWith(cls)) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+function unifyComments(text : string | undefined) {
+	if(text === undefined) {
+		return "";
+	}
+
+	var eol : string;
+	switch(vscode.window.activeTextEditor?.document.eol) {
+		case vscode.EndOfLine.LF:
+			eol = "\n";
+			break;
+		case vscode.EndOfLine.CRLF:
+			eol = "\r\n";
+			break;
+		default:
+			eol = "\n";
+			break;
+	}
+
+	var maxLength = vscode.workspace
+		.getConfiguration("unicomments")
+		.get<Number>("commentLineLength") || Number.MAX_VALUE;
+
+	var newText = "";
+	var newLine = "";
+	var remainder = "";
+	var indent = "";
+	var lineStart = "";
+
+	text.split(eol).forEach(line => {
+		if(lineIsComment(line)) {
+			var words = line.trim().split(" ");
+			indent = line.substr(0, line.indexOf(words[0]));
+			lineStart = words[0];
+			newLine = indent + lineStart + remainder;
+
+			if(words.length === 1) {
+				newText += (newText.length > 0 ? eol : "") + newLine;
+			}
+
+			for(var i = 1; i < words.length; ++i) {
+				var lineProbe = newLine.substr(newLine.indexOf(lineStart) + lineStart.length + 1) + " " + words[i];
+				lineProbe = lineProbe.trimLeft();
+
+				if(lineProbe.length > maxLength) {
+					if(lineProbe.split(" ").length === 1) {
+						newLine += " " + words[i];
+						newText += (newText.length > 0 ? eol : "") + newLine.trimRight();
+						newLine = indent + lineStart;
+					} else {
+						newText += (newText.length > 0 ? eol : "") + newLine.trimRight();
+						newLine = indent + lineStart + " " + words[i];
+					}
+				} else {
+					newLine += " " + words[i];
+				}
+
+				if(i === words.length-1) {
+					remainder = " " + newLine.substr(newLine.indexOf(lineStart) + lineStart.length + 1);
+				}
+			}
+		} else {
+			if(remainder.length > 0) {
+				newText += eol + indent + lineStart + remainder;
+				remainder = "";
+			}
+
+			newText += (newText.length > 0 ? eol : "") + line;
+		}
+	});
+
+	if(remainder.length > 0) {
+		newText += eol + indent + lineStart + remainder;
+	}
+
+	return newText;
+}
